@@ -2,6 +2,8 @@
 
 一个修仙题材的单机卡牌爬塔游戏。你带着一卷残剑谱与十张旧牌，沿青云山道向上，击败山道尽头的妖王；通关后还能进入更长、更强的下一周目。
 
+> 仓库地址：<https://github.com/nihaoa1452/qinglan-wendao>
+
 - Vite 7 + TypeScript + 原生 DOM/CSS，无游戏引擎
 - 桌面优先，手机/平板自适应
 - 单局约 15–25 分钟；死亡后从头再来
@@ -10,6 +12,16 @@
 - 玩法结构受《杀戮尖塔》等卡牌爬塔游戏启发；**具体卡牌、敌人、地图与数值为本项目原创**，没有复制原作的关卡数据或文本
 
 > 旧的“30 天宗门经营”玩法已被替换，相关代码、素材和文档已从当前版本移除；如需回溯，可在 Git 历史中查看。
+
+## 界面预览
+
+| 标题 | 选路 |
+| --- | --- |
+| ![标题界面](docs/screenshots/title.jpg) | ![山道地图](docs/screenshots/map.jpg) |
+
+| 战斗 | 玩法说明 |
+| --- | --- |
+| ![战斗界面](docs/screenshots/combat.jpg) | ![玩法说明](docs/screenshots/help.jpg) |
 
 ## 快速开始
 
@@ -129,8 +141,8 @@ npm run dev
 另开终端：
 
 ```bash
-npm test              # 规则检查（scripts/check-rules.ts）
-npm run test:e2e      # 浏览器端到端检查（需要先启动 dev server）
+npm test              # 92 项规则检查（scripts/check-rules.ts）
+npm run test:e2e      # 95 项浏览器检查（需要先启动 dev server）
 npm run sim           # 100 局自动爬塔
 ```
 
@@ -156,3 +168,7 @@ npm run sim           # 100 局自动爬塔
 - 旧宗门经营素材已移除，仓库体积更小
 
 素材映射见 [docs/ASSET_MAP.md](docs/ASSET_MAP.md)，提示词与复现流程见 [docs/ART_PASS_2026.md](docs/ART_PASS_2026.md)，放置规格见 [public/assets/README.md](public/assets/README.md)。
+
+## 反馈
+
+问题、建议或平衡性反馈，欢迎在 [Issues](https://github.com/nihaoa1452/qinglan-wendao/issues) 提出。
