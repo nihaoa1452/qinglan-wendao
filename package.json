@@ -1,0 +1,19 @@
+{
+  "name": "qinglan-zong",
+  "private": true,
+  "version": "0.7.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "sim": "tsx scripts/sim-sts.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^7.2.2",
+    "tsx": "^4.20.6",
+    "playwright-core": "^1.56.1"
+  },
+  "description": "青岚问道录：修仙题材的卡牌爬塔游戏"
+}

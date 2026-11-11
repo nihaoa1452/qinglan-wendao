@@ -1,0 +1,54 @@
+﻿分组,项目,当前值,单位/公式,代码位置,备注
+基础,游戏版本,3,,src/game/engine.ts · GAME_VERSION,v0.2 · 难度调整
+基础,天数上限,30,天,engine.ts · MAX_DAYS,
+基础,胜利声望,600,声望,engine.ts · WIN_REPUTATION,
+基础,初始灵石,20,灵石,engine.ts · createGame,
+基础,初始弟子,2,名,engine.ts · createGame,
+基础,初始声望,0,声望,engine.ts · createGame,
+基础,初始已建设施,0,座,engine.ts · createGame,默认方案 A：开局不预建设施
+流程,每日抽牌,5,张,engine.ts · HAND_SIZE,
+流程,设施上限,8,座,engine.ts · BOARD_SLOTS,
+流程,初始牌组,12,张,cards.ts · STARTER_DECK,9 行动 + 3 设施
+流程,初始行动牌,9,张,cards.ts · STARTER_DECK,5 种
+流程,初始设施牌,3,张,cards.ts · STARTER_DECK,灵田/藏经阁/演武场各 1
+流程,牌库洗牌,抽牌堆空时洗回弃牌堆,,engine.ts · drawCards,
+流程,购入牌去向,弃牌堆,,engine.ts · buyOffer,
+流程,日终手牌,全部弃掉,,engine.ts · endDay,
+坊市,每日货位,2,张,engine.ts · SHOP_SIZE,1 张行动牌 + 1 张设施牌
+坊市,换货价格,2,灵石/次,engine.ts · REFRESH_COST,
+坊市,换货次数,1,次/日,engine.ts · getRefreshIssue,
+坊市,换货范围,未售出的货位,,engine.ts · refreshShop,已售出货位保持已售
+坊市,行动牌池,15,张,cards.ts · SHOP_ACTION_POOL,7 常见 + 6 少见 + 2 稀有
+坊市,设施牌池,9,张,cards.ts · SHOP_FACILITY_POOL,4 常见 + 3 少见 + 2 稀有
+坊市,总卡池,24,张,cards.ts · SHOP_POOL,行动 15 + 设施 9
+坊市,稀有度权重-常见,5,,cards.ts · RARITY_WEIGHT,
+坊市,稀有度权重-少见,3,,cards.ts · RARITY_WEIGHT,
+坊市,稀有度权重-稀有,1.5,,cards.ts · RARITY_WEIGHT,
+坊市,行动池总权重,56,,35 + 18 + 3,
+坊市,行动货位-常见概率,62.50%,,35 / 56,
+坊市,行动货位-少见概率,32.14%,,18 / 56,
+坊市,行动货位-稀有概率,5.36%,,3 / 56,
+坊市,设施池总权重,32,,20 + 9 + 3,
+坊市,设施货位-常见概率,62.50%,,20 / 32,
+坊市,设施货位-少见概率,28.125%,,9 / 32,
+坊市,设施货位-稀有概率,9.375%,,3 / 32,
+经济,弟子每日供奉,2,灵石/人/日,engine.ts · getDailyIncome,
+经济,弟子每日俸禄,1,灵石/人/日,engine.ts · getDailyIncome,
+经济,弟子每日净收入,1,灵石/人/日,供奉 - 俸禄,
+经济,招募弟子-招收弟子牌,6,灵石/1 名,cards.ts · zhaoshou,按净收入约 6 天回本
+经济,招募弟子-广纳门徒牌,8,灵石/2 名,cards.ts · guangna,按净收入约 4 天回本
+事件,事件起始日,3,日,engine.ts · rollEvent,
+事件,每日触发概率,35,%,engine.ts · rollEvent,未触发保底时
+事件,保底间隔,3,日,engine.ts · rollEvent,距上次事件满 3 天必触发
+事件,首次事件参考,第 3 日 35% / 第 4 日保底,,lastEventDay 初始为 1,
+事件,事件权重总和,20,,events.ts,
+规则,破产判定,日终结算后灵石 < 0,,engine.ts · checkBankruptcy,日间可为负
+规则,日间负灵石,允许，可用免费牌自救,,engine.ts · getPlayIssue,费用 > 0 的牌仍不可打出
+规则,藏经阁叠加,每座使讲道额外 +2 声望,,engine.ts · applyAction,4 座讲道 = 10 声望
+规则,设施位满,禁止打出设施牌,,engine.ts · getPlayIssue,默认方案 A
+规则,坊市售罄,两个货位都售出则换货按钮禁用,,engine.ts · getRefreshIssue,
+规则,事件弹层,有，确认后继续,,src/main.ts / render.ts,
+胜负,破产条件,日终结算后灵石 < 0,,engine.ts · checkBankruptcy,任意日终
+胜负,超时条件,第 30 天结束仍未达 300 声望,,engine.ts · endDay,
+胜负,胜利条件,声望 >= 300,,engine.ts · checkVictory,任意检查点
+存档,存档键,qinglan-zong-save-v1,,src/game/save.ts,localStorage
