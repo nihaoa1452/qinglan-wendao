@@ -48,6 +48,24 @@ assert(await page.$('.sts-map') !== null, 'starting a run opens the map');
 assert(st.deck.length === 10 && st.hp === 80, 'new run has 10 cards and 80 HP');
 assert(st.availableIds.length === 3, 'three starting paths are available');
 assert((await page.$$('.sts-map-edge')).length > 10, 'map branches are drawn as a tree');
+const mapLayout = await page.evaluate(() => {
+  const screen = document.querySelector('.sts-screen').getBoundingClientRect();
+  const columns = new Map();
+  for (const node of document.querySelectorAll('.sts-node')) {
+    const box = node.getBoundingClientRect();
+    const key = Math.round(box.left + box.width / 2);
+    if (!columns.has(key)) columns.set(key, []);
+    columns.get(key).push({ top: box.top, bottom: box.bottom });
+  }
+  let overlap = 0;
+  for (const rows of columns.values()) {
+    rows.sort((a, b) => a.top - b.top);
+    for (let i = 1; i < rows.length; i++) overlap = Math.max(overlap, rows[i - 1].bottom - rows[i].top);
+  }
+  return { screenWidth: screen.width, viewportWidth: innerWidth, overlap };
+});
+assert(Math.abs(mapLayout.screenWidth - mapLayout.viewportWidth) < 1, 'screen scrolls at the viewport edge');
+assert(mapLayout.overlap <= 0, 'map nodes do not overlap between rows');
 const hoverNode = page.locator('.sts-node.is-available').first();
 const hoverBefore = await hoverNode.boundingBox();
 await hoverNode.hover();
@@ -81,6 +99,8 @@ await page.click('[data-action="help"]');
 await page.waitForTimeout(180);
 assert(await page.locator('.sts-help-tile').count() === 4, 'help overlay has illustrated sections');
 assert(await page.locator('.sts-help-hero').count() === 1, 'help overlay has a hero image');
+const helpImages = await page.locator('.sts-help-tile__art').evaluateAll((els) => els.map((el) => getComputedStyle(el).backgroundImage));
+assert(helpImages.length === 4 && helpImages.every((url) => url && url !== 'none'), 'all help tiles have artwork');
 await page.screenshot({ path: 'shots/sts-e2e-help.png' });
 await page.click('[data-action="close-overlay"]');
 await page.waitForTimeout(100);

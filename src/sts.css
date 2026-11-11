@@ -399,12 +399,14 @@ p {
 /* ---------- generic screens ---------- */
 
 .sts-screen {
+  --screen-max: 1380px;
+  --screen-pad: 26px;
   flex: 1 1 auto;
   min-height: 0;
   width: 100%;
-  max-width: 1380px;
-  margin: 0 auto;
-  padding: 20px 26px 22px;
+  max-width: none;
+  margin: 0;
+  padding: 20px max(var(--screen-pad), calc((100% - var(--screen-max)) / 2)) 22px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -439,13 +441,13 @@ p {
 /* ---------- map ---------- */
 
 .sts-map-screen {
-  max-width: 1000px;
+  --screen-max: 1080px;
 }
 
 .sts-map {
   position: relative;
   width: min(760px, 100%);
-  height: clamp(480px, 62vh, 610px);
+  height: max(660px, calc(var(--map-rows, 8) * 84px));
   margin: 0 auto;
   padding: 0;
   flex: 0 0 auto;
@@ -549,7 +551,7 @@ p {
 /* ---------- combat ---------- */
 
 .sts-combat-screen {
-  max-width: 1280px;
+  --screen-max: 1280px;
 }
 
 .sts-combat-top {
@@ -1376,7 +1378,9 @@ p {
   }
 
   .sts-screen {
-    padding: 15px 15px 16px;
+    --screen-pad: 15px;
+    padding-top: 15px;
+    padding-bottom: 16px;
   }
 }
 
@@ -1397,10 +1401,6 @@ p {
 
   .sts-screen__head h2 {
     font-size: 23px;
-  }
-
-  .sts-map {
-    height: clamp(430px, 68vh, 560px);
   }
 
   .sts-map > .sts-node {
@@ -1904,7 +1904,7 @@ p {
 /* ---------- map redesign: a mountain route scroll ---------- */
 
 .sts-map-screen {
-  max-width: 1080px;
+  --screen-max: 1080px;
 }
 
 .sts-map-frame {
@@ -1990,7 +1990,6 @@ p {
   position: relative;
   z-index: 1;
   width: 100%;
-  height: clamp(620px, 72vh, 760px);
   margin: 0 auto;
 }
 
@@ -2023,7 +2022,7 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 4px;
   width: 124px;
   min-height: 64px;
   padding: 0;
@@ -2170,18 +2169,11 @@ p {
     border-radius: 17px;
   }
 
-  .sts-map {
-    height: clamp(560px, 68vh, 660px);
-  }
 }
 
 @media (max-width: 640px) {
   .sts-map-frame {
     padding: 10px 8px 8px;
-  }
-
-  .sts-map {
-    height: clamp(520px, 64vh, 620px);
   }
 
   .sts-map > .sts-node {
@@ -2885,12 +2877,6 @@ p {
 }
 
 /* More rows should make the map taller rather than crowd the seals. */
-@media (min-width: 981px) {
-  .sts-map {
-    height: max(620px, calc(var(--map-rows, 8) * 70px));
-  }
-}
-
 @media (max-width: 980px) {
   .sts-meta-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2899,7 +2885,7 @@ p {
 
 @media (max-width: 640px) {
   .sts-map {
-    height: max(520px, calc(var(--map-rows, 8) * 64px));
+    height: max(540px, calc(var(--map-rows, 8) * 68px));
   }
 
   .sts-meta-hero {

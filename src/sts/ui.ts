@@ -749,7 +749,7 @@ function overlayHtml(run: RunState | null): string {
             <div><h3>看意图</h3><p>敌方意图显示实际伤害，已经计入力量、虚弱和破甲；悬停可以看明细。</p></div>
           </article>
           <article class="sts-help-tile">
-            <div class="sts-help-tile__art" style="background-image:url('${cardArtUrl('yaoyuan')}')"></div>
+            <div class="sts-help-tile__art" style="background-image:url('${SHOP_ART_URL}')"></div>
             <div><h3>带资源</h3><p>丹药不耗灵力；坊市可买牌或删牌；遗物会改变整局节奏。</p></div>
           </article>
         </div>
