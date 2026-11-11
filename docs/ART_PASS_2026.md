@@ -18,7 +18,7 @@
 | 传承横幅 | 5 | `public/assets/meta/<upgradeId>.jpg` | 1200×400 JPG（3:1） |
 | 游戏标题字 | 1 | `public/assets/title-qinglan.png` | 透明 PNG，裁到文字区域 |
 
-旧的 29 张宗门经营卡图仍保留在 `public/assets/cards/*.png`，仅作为历史素材和回退，不再被当前 33 张卡牌引用。
+旧宗门经营的 29 张卡图已从当前素材目录移除；如要回溯，可在 Git 历史中查看。
 
 ## 风格锁
 
@@ -86,14 +86,14 @@
 ## 复现
 
 1. 把生成任务写成 JSON（字段：`name`、`prompt`、`size`、`with_matting`），参考 `shots/artgen/card-jobs.json`、`scene-jobs.json`、`meta-jobs.json`。
-2. 运行 `node scripts/artgen.mjs --jobs <jobs.json> --out <dir> --concurrency 6`。
+2. 运行 `node scripts/art/artgen.mjs --jobs <jobs.json> --out <dir> --concurrency 6`。
 3. 结果和游点灵资源 id 会写入 `<dir>/manifest.json`，再去 `docs/ASSET_MAP.md` 查/补映射。
-4. 运行 `python scripts/process-art.py`：按固定规格裁切、压暗角、补透明边，写入 `public/assets/`。
+4. 运行 `python scripts/art/process-art.py`：按固定规格裁切、压暗角、补透明边，写入 `public/assets/`。
 5. 代码只认文件名，不需要改接口。
 
 ## 接入位置
 
-- `src/game/assets.ts`：卡图、敌人图、道具图、背景/场景 URL。
+- `src/sts/assets.ts`：卡图、敌人图、道具图、背景/场景 URL。
 - `src/sts/data.ts`：卡牌、敌人、遗物、丹药、传承的 `art` 字段。
 - `src/sts/ui.ts`：标题、地图、战斗、背包、图鉴、坊市、闭关、结局的图片引用。
 - `src/sts-art.css`：卡框、暗色画窗、地图卷轴、战斗舞台、标题卡、移动端覆盖。

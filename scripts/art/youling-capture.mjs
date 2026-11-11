@@ -3,8 +3,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import os from 'node:os';
+import { findBrowser } from './browser.mjs';
 
-const EDGE = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
 const OUT = path.resolve('shots/youling-captured');
 const PROFILE = path.join(os.homedir(), '.cache', 'qinglan-youling-profile');
 fs.mkdirSync(OUT, { recursive: true });
@@ -20,7 +20,7 @@ const log = (msg) => {
 
 const context = await chromium.launchPersistentContext(PROFILE, {
   headless: false,
-  executablePath: EDGE,
+  executablePath: findBrowser(),
   viewport: null,
   args: ['--start-maximized', '--disable-blink-features=AutomationControlled'],
 });

@@ -9,7 +9,7 @@
 - 8-bit 风格音效：出牌、攻击、格挡、受伤、回复、购牌、传承、胜负等均由 Web Audio 实时合成，无外部音频文件；标题页与 HUD 可开关
 - 玩法结构受《杀戮尖塔》等卡牌爬塔游戏启发；**具体卡牌、敌人、地图与数值为本项目原创**，没有复制原作的关卡数据或文本
 
-> 旧的“30 天宗门经营”玩法已被替换。旧版代码与文档仅作为历史保留，不再从入口加载。
+> 旧的“30 天宗门经营”玩法已被替换，相关代码、素材和文档已从当前版本移除；如需回溯，可在 Git 历史中查看。
 
 ## 快速开始
 
@@ -101,6 +101,7 @@ src/
     engine.ts    战斗、地图、奖励、商店、闭关规则
     save.ts      localStorage 存档
     audio.ts     8-bit 风格音效合成（Web Audio）
+    assets.ts    素材 URL 与卡图 id 清单
     ui.ts        全部界面渲染与交互
   sts.css        青岚问道录主题
   sts-art.css    2026-11 美术迭代样式（卡框、暗色画窗、地图卷轴、战斗舞台）
@@ -110,12 +111,10 @@ scripts/
   check-rules.ts 纯规则检查
   e2e.mjs        浏览器端到端检查
   sim-sts.ts     自动爬塔平衡模拟
-  artgen.mjs     游点灵批量生图 / 下载 / manifest 工具
-  process-art.py 把原图处理成游戏内规格并写入 public/assets
+  art/           游点灵批量生图、原图处理与导出工具
 docs/
-  STS_DESIGN.md  新玩法设计说明
+  STS_DESIGN.md  玩法设计说明
   ART_PASS_2026.md 2026-11 美术迭代说明（提示词、参数、后处理、复现）
-  ART_BRIEF.md   游点灵美术提示词（历史素材）
   ASSET_MAP.md   素材 ID 映射
 ```
 
@@ -130,17 +129,19 @@ npm run dev
 另开终端：
 
 ```bash
-npx tsx scripts/check-rules.ts   # 92 项规则检查
-node scripts/e2e.mjs            # 92 项浏览器检查
-npm run sim                     # 100 局自动爬塔
+npm test              # 规则检查（scripts/check-rules.ts）
+npm run test:e2e      # 浏览器端到端检查（需要先启动 dev server）
+npm run sim           # 100 局自动爬塔
 ```
+
+`npm run test:e2e` 默认使用本机 Chrome/Edge/Chromium；也可以用 `BROWSER_PATH` 指定浏览器，用 `BASE_URL` 指定测试地址。
 
 ## 已知边界
 
 - 当前是单敌人战斗；没有多敌人站位、多角色；异闻池为 11 个，不是无限随机事件。
 - 地图仍是一层山道（周目会增长到 10/12 行），但节点类型、分支和敌人已经随机化；尚没有 3 层/多幕。
 - 已加入道蕴商店和周目难度；尚未做可选难度等级与多角色。
-- 旧经营模式的 `src/game/`、旧文档和旧 CSV 仍留在仓库中，但入口不再引用；后续可以清理。
+- 当前版本不再包含旧经营模式代码和素材，仓库只保留《青岚问道录》这一套实现。
 
 ## 素材
 
@@ -152,5 +153,6 @@ npm run sim                     # 100 局自动爬塔
 - 7 个遗物/丹药图标（`public/assets/items/*.png`）、5 张传承横幅（`public/assets/meta/*.jpg`）与「青岚问道录」标题字
 - 事件图、结局图沿用 2026-11-10 版本
 - 音效为 Web Audio 实时合成，不占用 `public/assets/`；没有 BGM 和语音
+- 旧宗门经营素材已移除，仓库体积更小
 
 素材映射见 [docs/ASSET_MAP.md](docs/ASSET_MAP.md)，提示词与复现流程见 [docs/ART_PASS_2026.md](docs/ART_PASS_2026.md)，放置规格见 [public/assets/README.md](public/assets/README.md)。

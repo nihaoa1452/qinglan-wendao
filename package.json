@@ -1,13 +1,20 @@
 {
-  "name": "qinglan-zong",
+  "name": "qinglan-wendao",
   "private": true,
   "version": "0.7.0",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "sim": "tsx scripts/sim-sts.ts"
+    "typecheck": "tsc --noEmit",
+    "test": "tsx scripts/check-rules.ts",
+    "test:e2e": "node scripts/e2e.mjs",
+    "sim": "tsx scripts/sim-sts.ts",
+    "art:process": "python scripts/art/process-art.py"
   },
   "devDependencies": {
     "typescript": "^5.9.3",

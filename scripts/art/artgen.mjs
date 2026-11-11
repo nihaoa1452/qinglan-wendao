@@ -3,13 +3,13 @@ import { chromium } from 'playwright-core';
 import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
+import { findBrowser } from './browser.mjs';
 
 const args = process.argv.slice(2);
 const opt = (name, def) => { const i = args.indexOf(name); return i >= 0 ? args[i+1] : def; };
 const JOBS = path.resolve(opt('--jobs', 'art-jobs.json'));
 const OUT = path.resolve(opt('--out', 'shots/artgen'));
 const CONC = Number(opt('--concurrency', '6'));
-const EDGE = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
 const PROFILE = path.join(os.homedir(), '.cache', 'qinglan-youling-profile');
 fs.mkdirSync(OUT, { recursive: true });
 const allJobs = JSON.parse(fs.readFileSync(JOBS, 'utf8'));
@@ -21,7 +21,7 @@ console.log(`jobs=${allJobs.length} done=${doneNames.size} pending=${pending.len
 if (!pending.length) process.exit(0);
 
 const context = await chromium.launchPersistentContext(PROFILE, {
-  headless: true, executablePath: EDGE, viewport: { width: 1280, height: 900 },
+  headless: true, executablePath: findBrowser(), viewport: { width: 1280, height: 900 },
   args: ['--disable-blink-features=AutomationControlled'],
 });
 const page = context.pages()[0] ?? await context.newPage();

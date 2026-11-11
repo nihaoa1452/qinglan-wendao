@@ -32,9 +32,10 @@ import { clearRun, loadMeta, loadRun, saveMeta, saveRun } from './save';
 import { initAudio, isSfxMuted, playSfx, toggleSfxMuted } from './audio';
 import type { CardDef, CardInstance, RunState } from './types';
 import {
-  CARD_ART_IDS, cardArtUrl, endingArtUrl, eventArtUrl, enemyArtUrl, itemArtUrl, ITEM_ART_IDS, metaArtUrl,
-  MAP_BG_URL, PLAYER_ART_URL, REST_ART_URL, SECT_BG_URL, SHOP_ART_URL, TITLE_BG_URL, TITLE_URL,
-} from '../game/assets';
+  APP_BG_URL, CARD_ART_IDS, cardArtUrl, endingArtUrl, eventArtUrl, enemyArtUrl,
+  itemArtUrl, ITEM_ART_IDS, metaArtUrl, MAP_BG_URL, PLAYER_ART_URL,
+  REST_ART_URL, SHOP_ART_URL, TITLE_BG_URL, TITLE_URL,
+} from './assets';
 
 type Overlay = 'help' | 'bag' | 'codex' | 'battle-log' | 'remove' | 'pause' | 'meta' | null;
 
@@ -832,7 +833,7 @@ function render(): void {
     case 'defeat': screen = endingScreen(run); break;
     default: screen = mapScreen(run);
   }
-  root.innerHTML = `<div class="sts-app"><div class="sts-bg" style="background-image:url('${SECT_BG_URL}')"></div>${hud(run)}${screen}${overlayHtml(run)}</div>`;
+  root.innerHTML = `<div class="sts-app"><div class="sts-bg" style="background-image:url('${APP_BG_URL}')"></div>${hud(run)}${screen}${overlayHtml(run)}</div>`;
 }
 
 function handleAction(action: string, target: HTMLElement): void {

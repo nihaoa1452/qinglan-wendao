@@ -1,7 +1,22 @@
+import fs from 'node:fs';
 import { chromium } from 'playwright-core';
 
-const EDGE = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
-const browser = await chromium.launch({ headless: true, executablePath: EDGE });
+const BASE_URL = process.env.BASE_URL ?? 'http://localhost:5173/';
+const BROWSERS = [
+  process.env.BROWSER_PATH,
+  'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
+  'C:\\Program Files\\Microsoft\\Edge\\Application\\msedge.exe',
+  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  '/usr/bin/google-chrome',
+  '/usr/bin/chromium',
+  '/usr/bin/chromium-browser',
+].filter(Boolean);
+const executablePath = BROWSERS.find((candidate) => fs.existsSync(candidate));
+if (!executablePath) {
+  console.error('No Chrome/Edge/Chromium found. Set BROWSER_PATH to a browser executable.');
+  process.exit(1);
+}
+const browser = await chromium.launch({ headless: true, executablePath });
 let passed = 0;
 const errors = [];
 function assert(cond, message) {
@@ -14,7 +29,7 @@ const page = await context.newPage();
 page.on('pageerror', (err) => errors.push(err.message));
 const getState = () => page.evaluate(() => JSON.parse(localStorage.getItem('qinglan-sts-save-v1') || 'null'));
 
-await page.goto('http://localhost:5173/', { waitUntil: 'networkidle' });
+await page.goto(BASE_URL, { waitUntil: 'networkidle' });
 await page.waitForTimeout(300);
 console.log('scenario: title and new run');
 assert(await page.$('.sts-title') !== null, 'title screen is visible');
@@ -338,7 +353,7 @@ console.log('scenario: mobile layout');
 const mobileContext = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
 const mobile = await mobileContext.newPage();
 mobile.on('pageerror', (err) => errors.push('mobile: ' + err.message));
-await mobile.goto('http://localhost:5173/', { waitUntil: 'networkidle' });
+await mobile.goto(BASE_URL, { waitUntil: 'networkidle' });
 await mobile.waitForTimeout(250);
 assert(await mobile.$('.sts-title') !== null, 'mobile title screen is visible');
 await mobile.click('[data-action="start-run"]');

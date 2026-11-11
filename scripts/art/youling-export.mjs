@@ -2,15 +2,15 @@ import { chromium } from 'playwright-core';
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
+import { findBrowser } from './browser.mjs';
 
-const EDGE = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
 const PROFILE = path.join(os.homedir(), '.cache', 'qinglan-youling-profile');
 const OUT = path.resolve('shots/youling-assets');
 fs.mkdirSync(OUT, { recursive: true });
 
 const context = await chromium.launchPersistentContext(PROFILE, {
   headless: true,
-  executablePath: EDGE,
+  executablePath: findBrowser(),
   viewport: { width: 1280, height: 900 },
   args: ['--disable-blink-features=AutomationControlled'],
 });

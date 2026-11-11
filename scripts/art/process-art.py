@@ -2,7 +2,7 @@
 """Turn Youling raw art into the game's public assets.
 
 Usage:
-  python scripts/process-art.py
+  python scripts/art/process-art.py
 
 Reads manifests from shots/artgen/{cards,scenes}/manifest.json and writes:
   public/assets/cards/<cardId>.jpg
@@ -22,7 +22,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageEnhance, ImageOps
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[2]
 CARDS_MANIFEST = ROOT / "shots/artgen/cards/manifest.json"
 SCENES_MANIFEST = ROOT / "shots/artgen/scenes/manifest.json"
 META_MANIFEST = ROOT / "shots/artgen/meta/manifest.json"

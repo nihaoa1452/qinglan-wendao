@@ -478,24 +478,6 @@ p {
   min-height: 44px;
   transform: translate(-50%, -50%);
 }
-
-.sts-map__row {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
-  align-items: center;
-  min-height: 49px;
-  opacity: 0.42;
-}
-
-.sts-map__row.is-open {
-  opacity: 1;
-}
-
-.sts-map__row.is-open .sts-node.is-available {
-  box-shadow: 0 0 0 1px rgba(240, 212, 147, 0.28), 0 0 22px rgba(217, 185, 108, 0.14);
-}
-
 .sts-node {
   position: relative;
   display: flex;
@@ -590,37 +572,6 @@ p {
   display: grid;
   grid-template-columns: 230px minmax(0, 1fr);
 }
-
-.sts-enemy-card__art {
-  min-height: 172px;
-  background-position: center;
-  background-size: cover;
-  border-right: 1px solid rgba(217, 185, 108, 0.14);
-  filter: saturate(0.86);
-}
-
-.sts-enemy-card__body,
-.sts-player-card {
-  padding: 15px 18px;
-}
-
-.sts-enemy-card__head,
-.sts-player-card__head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.sts-enemy-card__head h2,
-.sts-player-card__head h2 {
-  margin-top: 2px;
-  color: #f0e3c2;
-  font-size: 25px;
-  letter-spacing: 0.12em;
-}
-
 .sts-intent {
   max-width: 210px;
   padding: 5px 8px;
@@ -1182,48 +1133,6 @@ p {
 .sts-deck-overlay {
   width: min(760px, 100%);
 }
-
-.sts-deck-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 7px;
-}
-
-.sts-deck-card {
-  padding: 8px 9px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 7px;
-  background: rgba(255, 255, 255, 0.025);
-}
-
-.sts-deck-card b {
-  display: block;
-  color: #e3d4b3;
-  font-family: var(--serif);
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.sts-deck-card span {
-  display: block;
-  margin-top: 2px;
-  color: #8fa294;
-  font-size: 9px;
-  line-height: 1.45;
-}
-
-button.sts-deck-card {
-  text-align: left;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-}
-
-button.sts-deck-card:hover {
-  border-color: rgba(217, 185, 108, 0.45);
-  background: rgba(217, 185, 108, 0.07);
-}
-
 .sts-bag-stats {
   display: flex;
   flex-wrap: wrap;
@@ -1499,12 +1408,6 @@ button.sts-deck-card:hover {
     min-height: 46px;
     padding: 5px 4px;
   }
-
-  .sts-map__row {
-    gap: 9px;
-    min-height: 44px;
-  }
-
   .sts-node {
     flex-direction: column;
     gap: 3px;
@@ -1519,18 +1422,6 @@ button.sts-deck-card:hover {
   .sts-enemy-card {
     grid-template-columns: 1fr;
   }
-
-  .sts-enemy-card__art {
-    min-height: 120px;
-    border-right: 0;
-    border-bottom: 1px solid rgba(217, 185, 108, 0.14);
-  }
-
-  .sts-enemy-card__body,
-  .sts-player-card {
-    padding: 12px 13px;
-  }
-
   .sts-hp .sts-bar {
     width: 90px;
   }
@@ -2348,7 +2239,7 @@ button.sts-deck-card:hover {
   content: "";
   position: absolute;
   inset: 0;
-  background: url('/assets/bg-sect.jpg') center / cover no-repeat;
+  background: url('/assets/bg/sect.jpg') center / cover no-repeat;
   opacity: 0.1;
   filter: saturate(0.55) sepia(0.15);
   pointer-events: none;

@@ -14,14 +14,11 @@ import {
   buildMap,
 } from './data';
 import type {
-  CardDef,
   CardInstance,
   CombatState,
-  EnemyDef,
   EnemyMove,
   MapNode,
   MetaState,
-  RelicDef,
   RewardState,
   RunState,
 } from './types';
@@ -47,11 +44,6 @@ function shuffled<T>(run: RunState, items: T[]): T[] {
 function makeCard(run: RunState, defId: string, upgraded = false): CardInstance {
   return { uid: `c${run.nextUid++}`, defId, upgraded };
 }
-
-export function cardDef(id: string): CardDef {
-  return CARDS[id];
-}
-
 export function cardCost(card: CardInstance): number {
   const def = CARDS[card.defId];
   return card.upgraded && def.upgradedCost !== undefined ? def.upgradedCost : def.cost;
@@ -70,11 +62,6 @@ export function cardDesc(card: CardInstance): string {
 export function cardName(card: CardInstance): string {
   return `${CARDS[card.defId].name}${card.upgraded ? '+' : ''}`;
 }
-
-export function enemyDef(id: string): EnemyDef {
-  return ENEMIES[id];
-}
-
 export function enemyMove(enemyId: string, moveIndex: number): EnemyMove {
   const def = ENEMIES[enemyId];
   return def.pattern[moveIndex % def.pattern.length];
@@ -91,19 +78,7 @@ export function nodeById(run: RunState, id: string): MapNode | null {
     if (found) return found;
   }
   return null;
-}
-
-export function availableNodes(run: RunState): MapNode[] {
-  return run.availableIds
-    .map((id) => nodeById(run, id))
-    .filter((node): node is MapNode => node !== null);
-}
-
-export function relicDef(id: string): RelicDef {
-  return RELICS[id];
-}
-
-export function createRun(seed = Date.now() >>> 0, meta?: MetaState, cycle?: number): RunState {
+}export function createRun(seed = Date.now() >>> 0, meta?: MetaState, cycle?: number): RunState {
   const unlocked = new Set(meta?.unlocked ?? []);
   const actualCycle = Math.max(1, Math.floor(cycle ?? meta?.cycle ?? 1));
   const maxHp = START_HP + (unlocked.has('vitality') ? 10 : 0);
@@ -791,12 +766,6 @@ export function eventChoice(run: RunState, choiceId: string): { ok: boolean; mes
 
   finishEvent(run);
   return { ok: true, message };
-}
-
-export function bossDefeated(run: RunState): boolean {
-  if (!run.currentNodeId) return false;
-  const node = nodeById(run, run.currentNodeId);
-  return node?.type === 'boss' && run.screen === 'victory';
 }
 
 export function canUpgrade(run: RunState): boolean {
